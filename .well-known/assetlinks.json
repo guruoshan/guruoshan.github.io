@@ -1,0 +1,14 @@
+[
+  {
+    "relation": [
+      "delegate_permission/common.handle_all_urls"
+    ],
+    "target": {
+      "namespace": "android_app",
+      "package_name": "com.dailymoneyregister",
+      "sha256_cert_fingerprints": [
+        "FD:71:BC:6A:92:2F:98:BC:82:8B:DD:CE:35:B4:F7:0D:91:4C:3F:5E:8D:45:83:3A:3C:90:51:6F:FC:30:9A:93"
+      ]
+    }
+  }
+]

@@ -1,0 +1,29 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="referrer" content="no-referrer">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; connect-src https://ttvdpgxqvvtjnxxfkoui.supabase.co; base-uri 'none'; form-action 'none'; object-src 'none'">
+  <title>Paid&amp;Due account confirmation</title>
+  <link rel="stylesheet" href="/assets/paiddue-auth.css">
+  <script type="module" src="/assets/paiddue-fallback.js"></script>
+</head>
+<body>
+  <main>
+    <p class="brand">PAID&amp;DUE</p>
+    <h1 id="heading">Account confirmation</h1>
+    <p id="intro">Checking the confirmation result…</p>
+    <form id="password-form" hidden novalidate>
+      <label for="password">New password</label>
+      <input id="password" name="password" type="password" minlength="8" autocomplete="new-password" required>
+      <label for="confirm-password">Confirm new password</label>
+      <input id="confirm-password" name="confirm-password" type="password" minlength="8" autocomplete="new-password" required>
+      <button id="save-password" type="submit">Save new password</button>
+    </form>
+    <p id="status" class="status" role="status" aria-live="polite"></p>
+    <p class="small">Paid&amp;Due will never ask you to share your password by email or message.</p>
+  </main>
+</body>
+</html>

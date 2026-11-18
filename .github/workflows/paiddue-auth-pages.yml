@@ -1,0 +1,30 @@
+name: Paid&Due auth pages checks
+
+on:
+  pull_request:
+    paths:
+      - "assets/**"
+      - "paiddue/**"
+      - "tests/**"
+      - ".github/workflows/paiddue-auth-pages.yml"
+  push:
+    branches: [main]
+    paths:
+      - "assets/**"
+      - "paiddue/**"
+      - "tests/**"
+      - ".github/workflows/paiddue-auth-pages.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  auth-page-tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Run auth flow tests
+        run: node --test tests/*.test.mjs

@@ -27,8 +27,8 @@ The token hash is placed in the URL fragment. Browsers do not send fragments in 
 ## Required flow and limitations
 
 1. The email link opens /paiddue/continue, which is deliberately outside the Android manifest's exact /paiddue App Link path.
-2. The user presses the button. The page sends the token hash to Supabase Auth's verify endpoint using the project's public publishable key.
-3. On success, the page redirects to the exact /paiddue Android App Link with the returned session in the URL fragment. The Android app can import that session using its existing callback handler.
+2. The user presses Verify/Continue. The page sends the token hash to Supabase Auth's verify endpoint using the project's public publishable key.
+3. After successful verification, the page presents a second explicit button. The user taps it to open the exact /paiddue Android App Link with the returned session in the URL fragment. This direct user gesture is more reliable for Android App Link handoff than an automatic redirect after an asynchronous request.
 4. If the app is not installed, GitHub Pages serves /paiddue/ as a browser fallback. Recovery users can set a new password there; signup users see a confirmation message.
 
 The publishable key embedded in the static client is public by design. Never put a Supabase service_role key, secret API key, SMTP credential, or user password in this repository.
@@ -44,7 +44,7 @@ The publishable key embedded in the static client is public by design. Never put
 
 - Opening the landing page without clicking must not call /auth/v1/verify.
 - A fresh recovery email must open the landing page in Gmail without producing a Supabase GET /verify event merely from previewing the page.
-- One explicit click must produce one successful token exchange and launch the app when installed.
+- The first explicit click must produce one successful token exchange; a second explicit click must open the app when installed.
 - With the app absent, the browser fallback must allow a password change and show success.
 - A second use of the same email link must fail safely with a generic expired/used message.
 - A fresh signup email must verify once and show the confirmation state in the browser fallback or route into the app.

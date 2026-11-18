@@ -59,9 +59,11 @@ test("updates password using only the verified access token", async () => {
   assert.equal(request.options.credentials, "omit");
 });
 
-test("the landing page exchanges a token only from a click handler", async () => {
+test("the landing page exchanges a token only from a click handler and requires a direct second click for app handoff", async () => {
   const source = await readFile(new URL("../assets/paiddue-continue.js", import.meta.url), "utf8");
   assert.match(source, /button\.addEventListener\("click"/);
   assert.match(source, /verifyTokenHash\(callback\.tokenHash, callback\.type\)/);
+  assert.match(source, /let verifiedDestination = null/);
+  assert.match(source, /window\.location\.assign\(verifiedDestination\)/);
   assert.ok(source.indexOf('button.addEventListener("click"') < source.indexOf("verifyTokenHash(callback.tokenHash, callback.type)"));
 });

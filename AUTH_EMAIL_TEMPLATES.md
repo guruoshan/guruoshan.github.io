@@ -10,7 +10,7 @@ Subject: Verify your Paid&Due email address
 
     <h2>Welcome to Paid&amp;Due</h2>
     <p>Thanks for registering. Verify your email address to finish creating your Paid&amp;Due account.</p>
-    <p><a href="{{ .SiteURL }}/paiddue/continue#token_hash={{ .TokenHash }}&amp;type=email">Verify email address</a></p>
+    <p><a href="https://guruoshan.github.io/paiddue/continue#token_hash={{ .TokenHash }}&amp;type=email">Verify email address</a></p>
     <p>If you did not create this account, you can ignore this email.</p>
 
 ## Reset password
@@ -19,10 +19,10 @@ Subject: Reset your Paid&Due password
 
     <h2>Reset your Paid&amp;Due password</h2>
     <p>We received a request to reset the password for your account.</p>
-    <p><a href="{{ .SiteURL }}/paiddue/continue#token_hash={{ .TokenHash }}&amp;type=recovery">Continue to password reset</a></p>
+    <p><a href="https://guruoshan.github.io/paiddue/continue#token_hash={{ .TokenHash }}&amp;type=recovery">Continue to password reset</a></p>
     <p>If you did not request this, you can safely ignore this email.</p>
 
-The token hash is placed in the URL fragment. Browsers do not send fragments in the HTTP request to GitHub Pages. The page does not exchange the token during page load; it calls Supabase Auth only after the user presses the explicit Continue/Verify button.
+The callback URL is absolute so the email templates do not depend on the current Supabase Site URL path. The token hash is placed in the URL fragment. Browsers do not send fragments in the HTTP request to GitHub Pages. The page does not exchange the token during page load; it calls Supabase Auth only after the user presses the explicit Continue/Verify button.
 
 ## Required flow and limitations
 
@@ -35,7 +35,7 @@ The publishable key embedded in the static client is public by design. Never put
 
 ## Dashboard rollout checklist
 
-- Keep the Site URL as https://guruoshan.github.io.
+- Keep the existing Site URL and verify that the app's configured redirect URL https://guruoshan.github.io/paiddue remains allowed for resetPasswordForEmail.
 - Update the Confirm signup and Reset password templates to the snippets above.
 - Do not alter SMTP credentials, OTP expiry, RLS, database schema, or Edge Functions as part of this change.
 - Send a fresh signup confirmation and a fresh password reset email after the templates are saved. Old emails still contain the old one-time verification URL and must not be used for acceptance testing.

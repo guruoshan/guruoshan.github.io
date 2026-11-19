@@ -35,12 +35,13 @@ test("builds only the fixed Paid&Due Android callback URL", () => {
   assert.throws(() => buildAppCallbackUrl({ access_token: "a" }, "recovery"), /AUTH_SESSION_INVALID/);
 });
 
-test("always includes required session fields and defaults missing expires_in to 3600", () => {
+test("always includes required session fields and defaults missing expires_in to 3600", async () => {
   const requiredFields = ["access_token", "refresh_token", "token_type", "type"];
-  const missingExpiryUrl = new URL(buildAppCallbackUrl({
-    access_token: "fake-access",
-    refresh_token: "fake-refresh",
-  }, "recovery"));
+  const missingExpirySession = await verifyTokenHash("fake-token-hash", "recovery", async () => ({
+    ok: true,
+    json: async () => ({ access_token: "fake-access", refresh_token: "fake-refresh" }),
+  }));
+  const missingExpiryUrl = new URL(buildAppCallbackUrl(missingExpirySession, "recovery"));
   const missingExpiry = new URLSearchParams(missingExpiryUrl.hash.slice(1));
 
   for (const field of requiredFields) assert.ok(missingExpiry.has(field), `missing ${field}`);
@@ -48,12 +49,16 @@ test("always includes required session fields and defaults missing expires_in to
   assert.equal(missingExpiry.get("token_type"), "bearer");
   assert.equal(missingExpiry.get("type"), "recovery");
 
-  const validExpiryUrl = new URL(buildAppCallbackUrl({
-    access_token: "fake-access",
-    refresh_token: "fake-refresh",
-    token_type: "bearer",
-    expires_in: 1800.5,
-  }, "recovery"));
+  const validExpirySession = await verifyTokenHash("fake-token-hash", "recovery", async () => ({
+    ok: true,
+    json: async () => ({
+      access_token: "fake-access",
+      refresh_token: "fake-refresh",
+      token_type: "bearer",
+      expires_in: 1800.5,
+    }),
+  }));
+  const validExpiryUrl = new URL(buildAppCallbackUrl(validExpirySession, "recovery"));
   const validExpiry = new URLSearchParams(validExpiryUrl.hash.slice(1));
 
   for (const field of requiredFields) assert.ok(validExpiry.has(field), `missing ${field}`);

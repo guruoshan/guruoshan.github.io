@@ -83,6 +83,6 @@ test("the landing page exchanges a token only from a click handler and requires 
   assert.match(source, /button\.addEventListener\("click"/);
   assert.match(source, /verifyTokenHash\(callback\.tokenHash, callback\.type\)/);
   assert.match(source, /let verifiedDestination = null/);
-  assert.match(source, /window\.location\.assign\(verifiedDestination\)/);
+  assert.match(source, /window\.location\.assign\(buildAndroidIntentUrl\(verifiedDestination\)\)/);
   assert.ok(source.indexOf('button.addEventListener("click"') < source.indexOf("verifyTokenHash(callback.tokenHash, callback.type)"));
 });

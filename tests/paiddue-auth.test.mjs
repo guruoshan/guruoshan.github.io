@@ -46,11 +46,11 @@ test("builds an explicit HTTPS Android intent and preserves the browser fallback
   assert.equal(appCallback.pathname, "/paiddue");
   assert.equal(appCallback.hash, new URL(callbackUrl).hash);
 
-  const fallback = intentUrl.match(/;S\\.browser_fallback_url=([^;]+);end$/);
+  const fallback = intentUrl.match(/;S\.browser_fallback_url=([^;]+);end$/);
   assert.ok(fallback);
   assert.equal(decodeURIComponent(fallback[1]), callbackUrl);
   assert.throws(() => buildAndroidIntentUrl("https://example.com/paiddue#type=recovery"), /AUTH_CALLBACK_URL_INVALID/);
-  assert.throws(() => buildAndroidIntentUrl("https://guruoshan.github.io/paiddue/ #type=recovery"), /AUTH_CALLBACK_URL_INVALID/);
+  assert.throws(() => buildAndroidIntentUrl("https://guruoshan.github.io/paiddue/#type=recovery"), /AUTH_CALLBACK_URL_INVALID/);
 });
 
 test("verifies token hashes using POST only when explicitly invoked", async () => {

@@ -46,6 +46,17 @@ export function buildAppCallbackUrl(session, type) {
   return callback.toString();
 }
 
+export function buildAndroidIntentUrl(callbackUrl) {
+  const callback = new URL(callbackUrl);
+  if (callback.origin !== SITE_ORIGIN || callback.pathname !== CALLBACK_PATH ||
+      callback.search || callback.username || callback.password || callback.port || !callback.hash) {
+    throw new Error("AUTH_CALLBACK_URL_INVALID");
+  }
+
+  const browserFallback = encodeURIComponent(callback.toString());
+  return `intent://${callback.host}${callback.pathname}${callback.hash}#Intent;scheme=https;package=com.dailymoneyregister;S.browser_fallback_url=${browserFallback};end`;
+}
+
 export async function verifyTokenHash(tokenHash, type, fetcher = fetch) {
   if (typeof tokenHash !== "string" || !tokenHash || !ALLOWED_EMAIL_TYPES.has(type)) {
     throw new Error("AUTH_LINK_INVALID");

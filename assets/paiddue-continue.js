@@ -1,4 +1,5 @@
 import {
+  buildAndroidIntentUrl,
   buildAppCallbackUrl,
   clearUrlFragment,
   parseTokenHashFragment,
@@ -37,10 +38,10 @@ if (!callback) {
 button.addEventListener("click", async () => {
   if (!callback || button.disabled) return;
 
-  // A second, direct user click launches the verified Android App Link.
-  // If the app is absent, the same URL loads the browser fallback.
+  // A second, direct user click explicitly targets the installed Android package.
+  // If the app is absent, Chrome opens the same verified callback in the browser fallback.
   if (verifiedDestination) {
-    window.location.assign(verifiedDestination);
+    window.location.assign(buildAndroidIntentUrl(verifiedDestination));
     return;
   }
 

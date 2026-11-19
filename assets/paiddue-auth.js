@@ -39,9 +39,10 @@ export function buildAppCallbackUrl(session, type) {
     token_type: session.token_type || "bearer",
     type,
   });
-  if (Number.isFinite(session.expires_in) && session.expires_in > 0) {
-    fragment.set("expires_in", String(Math.floor(session.expires_in)));
-  }
+  const expiresIn = Number.isFinite(session.expires_in) && session.expires_in > 0
+    ? session.expires_in
+    : 3600;
+  fragment.set("expires_in", String(expiresIn));
   callback.hash = fragment.toString();
   return callback.toString();
 }
